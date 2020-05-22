@@ -1,0 +1,173 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.clearfix::after{
+    content: " ";
+    display: table;
+    clear: both;
+}
+
+body{
+    overflow-x: hidden;
+}
+
+#page-wrapper{
+    background-color: rgb(20, 20, 20);
+}
+
+header{
+    position: fixed;
+    top: 0;
+    z-index: 3;
+    height: 68px;
+    width: 100%;
+    padding: 0 60px;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 10%, rgba(0, 0, 0, 0));
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#header-left{
+    display: flex;
+    align-items: center;
+}
+
+.logo-container{
+    margin-right: 15px;
+    float: left;
+}
+
+.logo-container img{
+    height: 50px;
+}
+
+.header-menu{
+    float: left;
+}
+
+.nav{
+    list-style: none;
+}
+
+.nav li{
+    float: left;
+    margin-left: 20px;
+}
+
+.nav li a{
+    font-size: 14px;
+    color: #e5e5e5;
+    text-decoration: none;
+}
+
+.nav li a.active{
+    color: #b3b3b3;
+}
+
+.nav li a:hover{
+    color: #b3b3b3;
+}
+
+#header-right{
+    display: flex;
+    align-items: center;
+}
+
+.nav-div{
+    margin-left: 20px;
+}
+
+.nav-div a{
+    color: white;
+    text-decoration: none;
+}
+
+.nav-div i{
+    font-size: 21px;
+}
+
+.nav-div img{
+    vertical-align: middle;
+}
+
+.search-section{
+    position: relative;
+}
+
+#icon-search i{
+    font-size: 18px;
+    color: white;
+}
+
+#icon-search.active{
+    position: absolute;
+    top: 7px;
+    left: 5px;
+}
+
+#search-input{
+    display: none;
+    height: 32px;
+    width: 212px;
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+    font-size: 14px;
+    padding: 0 5px 0 30px;
+}
+
+#search-input:focus{
+    outline: none;
+}
+
+#search-input.active{
+    display: inline-block;
+}
+
+#search-page{
+    display: none;
+    padding: 150px 60px 60px;
+}
+
+#search-page.active{
+    display: block;
+}
+
+.row{
+    width: 100%;
+    margin-bottom: 60px;
+}
+
+.box-film{
+    float: left;
+    width: calc(100% / 6);
+    padding: 0 1px;
+    color: white;
+    cursor: pointer;
+    position: relative;
+}
+
+.box-film img{
+    width: 100%;
+}
+
+.details-film{
+    display: none;
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+}
+
+.box-film:hover{
+    transform: scale(1.5);
+    z-index: 2;
+}
+
+.box-film:hover .details-film{
+    display: block;
+}

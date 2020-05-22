@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Boolflix</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+        <script src="https://kit.fontawesome.com/1cd71c3a7d.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div id="page-wrapper">
+            <header>
+                <div id="header-left" class="clearfix">
+                    <div class="logo-container">
+                        <a href="#">
+                            <img src="Netflix_Logo.png" alt="Netflix Logo">
+                        </a>
+                    </div>
+                    <div class="header-menu">
+                        <ul class="nav clearfix">
+                            <li>
+                                <a class="active" href="#">Home</a>
+                            </li>
+                            <li>
+                                <a href="#">Serie TV</a>
+                            </li>
+                            <li>
+                                <a href="#">Film</a>
+                            </li>
+                            <li>
+                                <a href="#">Nuovi arrivi</a>
+                            </li>
+                            <li>
+                                <a href="#">La mia lista</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="header-right">
+                    <div class="search-section nav-div">
+                        <span id="icon-search" class="active"><i class="fas fa-search"></i></span>
+                        <input type="search" id="search-input" placeholder="Titoli, persone, generi" class="active">
+                    </div>
+                    <div class="nav-div">
+                        <a href="#">BAMBINI</a>
+                    </div>
+                    <div class="nav-div">
+                        <a href="#"><i class="fas fa-gift"></i></a>
+                    </div>
+                    <div class="nav-div">
+                        <a href="#"><i class="fas fa-bell"></i></a>
+                    </div>
+                    <div class="nav-div">
+                        <a href="#">
+                            <img src="https://occ-0-3019-2581.1.nflxso.net/dnm/api/v6/Z-WHgqd_TeJxSuha8aZ5WpyLcX8/AAAABS16sbbwkw1EUyacCXlu_J5AbVgxxEN7ceSlfB9mNOng0m7-XBe0eGGhZAPmUpKyDC6pxBoaIAQLm1Mhu8SoEsg.png?r=cea" alt="">
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+            <div id="search-page" class="active"></div>
+            <main></main>
+        </div>
+        <script id="box-template" type="text/x-handlebars-template">
+            <div class="box-film">
+                <img src="https://image.tmdb.org/t/p/w1920_and_h800_multi_faces{{ img }}" alt="">
+                <div class="details-film">
+                    <div class="title">
+                        <h3>{{ title }}</h3>
+                    </div>
+                    <div class="original_title">
+                        <h3>{{ original_title }}</h3>
+                    </div>
+                    <div class="language">
+                        <p>{{ language }}</p>
+                    </div>
+                    <div class="vote">
+                        <p>{{ vote }}/10</p>
+                    </div>
+                </div>
+            </div>
+        </script>
+        <script src="main.js" charset="utf-8"></script>
+    </body>
+</html>
