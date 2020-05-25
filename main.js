@@ -60,7 +60,7 @@ function create_object_film(data) {
         img: data.poster_path,
         title: data.title,
         original_title: data.original_title,
-        language: data.original_language,
+        language: create_flag(data.original_language),
         vote: create_star(round_number(data.vote_average / 2))
     }
     return (box);
@@ -71,7 +71,7 @@ function create_object_tvshow(data) {
         img: data.poster_path,
         title: data.name,
         original_title: data.original_name,
-        language: data.original_language,
+        language: create_flag(data.original_language),
         vote: create_star(round_number(data.vote_average / 2))
     }
     return (box);
@@ -84,6 +84,16 @@ function round_number(n) {
         return (m + 0.5);
     } else {
         return (parseInt(Math.round(n)));
+    }
+}
+
+function create_flag(l) {
+    if (l=='en') {
+        return('<img src="icons/en.png" alt="">');
+    } else if (l=='it') {
+        return('<img src="icons/it.png" alt="">');
+    } else {
+        return(l);
     }
 }
 

@@ -163,6 +163,11 @@ header{
     left: 5px;
 }
 
+.language img{
+    height: 32px;
+    width: 40px;
+}
+
 .box-film:hover{
     transform: scale(1.5);
     z-index: 2;
@@ -170,4 +175,8 @@ header{
 
 .box-film:hover .details-film{
     display: block;
+}
+
+.box-film:hover > img{
+    filter: brightness(25%);
 }

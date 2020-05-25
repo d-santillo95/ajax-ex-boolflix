@@ -64,7 +64,7 @@
         </div>
         <script id="box-template" type="text/x-handlebars-template">
             <div class="box-film">
-                <img src="https://image.tmdb.org/t/p/w1920_and_h800_multi_faces{{ img }}" alt="">
+                <img src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/{{ img }}" alt="">
                 <div class="details-film">
                     <div class="title">
                         <h3>{{ title }}</h3>
@@ -73,7 +73,7 @@
                         <h3>{{ original_title }}</h3>
                     </div>
                     <div class="language">
-                        <p>{{ language }}</p>
+                        {{{ language }}}
                     </div>
                     <div class="vote">
                         <p>{{{ vote }}}</p>
