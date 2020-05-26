@@ -32,7 +32,7 @@ header {
     align-items: center;
 }
 
-header.scrolled{
+header.scrolled {
     background-color: black;
 }
 
@@ -139,7 +139,7 @@ header.scrolled{
     min-height: 100vh;
     width: 100%;
     padding: 120px 60px 60px;
-    background-color: rgb(20, 20 , 20);
+    background-color: rgb(20, 20, 20);
 }
 
 #wrap-search-page.active {
@@ -147,7 +147,7 @@ header.scrolled{
     z-index: 2;
 }
 
-.search{
+.search {
     font-size: 24px;
     color: white;
     margin-bottom: 40px;
@@ -204,11 +204,12 @@ header.scrolled{
     filter: brightness(25%);
 }
 
-#home-page{
+#home-page {
     display: none;
+    background-color: rgb(20, 20, 20);
 }
 
-#home-page.active{
+#home-page.active {
     display: block;
 }
 
@@ -218,14 +219,14 @@ header.scrolled{
     height: 840px;
 }
 
-.principal-box > img {
+.principal-box>img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     filter: brightness(60%);
 }
 
-.principal-box .details-box{
+.principal-box .details-box {
     display: block;
     width: 50%;
     padding: 0 30px;
@@ -233,6 +234,17 @@ header.scrolled{
     top: 150px;
 }
 
-.principal-box .title{
+.principal-box .title {
     font-size: 60px;
+}
+
+#other-boxes{
+    padding: 0 60px;
+    transform: translateY(-120px);
+}
+
+.title-row{
+    margin: 20px 0;
+    font-size: 40px;
+    color: white;
 }

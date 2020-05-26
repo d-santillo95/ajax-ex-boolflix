@@ -12,14 +12,14 @@ $(document).ready(function() {
     })
 
     $('#search-input').keyup(function(e) {
-        if(e.which == 13) {
-            if ($(this).val().trim() == '') {
+        if (e.which == 13) {
+            var r = $(this).val().trim();
+            if (r == '') {
                 $('#search-page').html('');
                 $('#wrap-search-page').removeClass('active');
                 $('#home-page').addClass('active');
                 $('.btn-home').addClass('active');
             } else {
-                var r = $(this).val();
                 $('#search-page').html('');
                 $('#search-paramater').text(r);
                 call_ajax(url_tmdb, key_tmdb, template_box, r, 'search/movie', 0);
@@ -33,10 +33,10 @@ $(document).ready(function() {
     })
 
     $(window).on("scroll", function() {
-        if($(window).scrollTop() > 60) {
+        if ($(window).scrollTop() > 60) {
             $("header").addClass("scrolled");
         } else {
-           $("header").removeClass("scrolled");
+            $("header").removeClass("scrolled");
         }
     });
 })
@@ -52,8 +52,8 @@ function call_ajax(url, key, template, r, search, type, page = 1) {
         },
         success: function(data) {
             create_box(data.results, template, type);
-            if (data.total_pages > page  && page < 6) {
-                page +=1;
+            if (data.total_pages > page && page < 6) {
+                page += 1;
                 call_ajax(url, key, template, r, search, type, page);
             }
         },
@@ -65,7 +65,7 @@ function call_ajax(url, key, template, r, search, type, page = 1) {
 
 function create_box(data, template, type) {
     for (var i = 0; i < data.length; i++) {
-        if ($('.row:last-of-type .box-film').length % 6 == 0) {
+        if ($('#search-page .row:last-of-type .box-film').length % 6 == 0) {
             $('#search-page').append('<div class="row clearfix"></div>');
         }
         if (type == 0) {
