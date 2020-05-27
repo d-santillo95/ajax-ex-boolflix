@@ -32,6 +32,55 @@ $(document).ready(function() {
                     $('#other-boxes .row:nth-child(2)').append(html);
                 }
             }
+            $('.box-film').each(function() {
+                var data_id = $(this).attr('data-id');
+                var data_genre = $(this).attr('data-genre');
+                if (data_id.charAt(0) == 't') {
+                    $.ajax({
+                        url: url_tmdb + 'tv/' + data_id.slice(1) + '/credits',
+                        data: {
+                            api_key: key_tmdb
+                        },
+                        success: function(database) {
+                            var s = '';
+                            for (var j = 0; j < database.cast.length && j < 5; j++) {
+                                if (j == database.cast.length - 1 || j == 4) {
+                                    s += database.cast[j].name;
+                                } else {
+                                    s += (database.cast[j].name + ', ');
+                                }
+                            }
+                            $('[data-id=' + data_id + ']').find('.cast').html('<p>Cast: ' + s + '</p>');
+                        },
+                        error: function() {
+                            alert('si è verificato un errore');
+                        }
+                    })
+                    $.ajax({
+                        url: url_tmdb + 'genre/movie/list',
+                        data: {
+                            api_key: key_tmdb
+                        },
+                        success: function(database) {
+                            var s = '';
+                            var j = 0;
+                            var k = 0;
+                            while (j < database.genres.length && k < 3) {
+                                if (data_genre.includes(database.genres[j].id)) {
+                                    s += (database.genres[j].name + ' - ');
+                                    k += 1;
+                                }
+                                j += 1;
+                            }
+                            s = s.slice(0, -3);
+                            $('[data-id=' + data_id + ']').find('.genres').html('<p>' + s + '</p>');
+                        },
+                        error: function() {
+                            alert('si è verificato un errore');
+                        }
+                    })
+                }
+            });
         },
         error: function() {
             alert('si è verificato un errore');
@@ -55,6 +104,55 @@ $(document).ready(function() {
                 var html = template_box(box);
                 $('#other-boxes .row:last-of-type').append(html);
             }
+            $('.box-film').each(function() {
+                var data_id = $(this).attr('data-id');
+                var data_genre = $(this).attr('data-genre');
+                if (data_id.charAt(0) == 'm') {
+                    $.ajax({
+                        url: url_tmdb + 'movie/' + data_id.slice(1) + '/credits',
+                        data: {
+                            api_key: key_tmdb
+                        },
+                        success: function(database) {
+                            var s = '';
+                            for (var j = 0; j < database.cast.length && j < 5; j++) {
+                                if (j == database.cast.length - 1 || j == 4) {
+                                    s += database.cast[j].name;
+                                } else {
+                                    s += (database.cast[j].name + ', ');
+                                }
+                            }
+                            $('[data-id=' + data_id + ']').find('.cast').html('<p>Cast: ' + s + '</p>');
+                        },
+                        error: function() {
+                            alert('si è verificato un errore');
+                        }
+                    })
+                    $.ajax({
+                        url: url_tmdb + 'genre/tv/list',
+                        data: {
+                            api_key: key_tmdb
+                        },
+                        success: function(database) {
+                            var s = '';
+                            var j = 0;
+                            var k = 0;
+                            while (j < database.genres.length && k < 3) {
+                                if (data_genre.includes(database.genres[j].id)) {
+                                    s += (database.genres[j].name + ' - ');
+                                    k += 1;
+                                }
+                                j += 1;
+                            }
+                            s = s.slice(0, -3);
+                            $('[data-id=' + data_id + ']').find('.genres').html('<p>' + s + '</p>');
+                        },
+                        error: function() {
+                            alert('si è verificato un errore');
+                        }
+                    })
+                }
+            });
         },
         error: function() {
             alert('si è verificato un errore');
@@ -113,6 +211,99 @@ function call_ajax(url, key, template, r, search, type, page = 1) {
                 page += 1;
                 call_ajax(url, key, template, r, search, type, page);
             }
+            $('.box-film').each(function() {
+                var data_id = $(this).attr('data-id');
+                var data_genre = $(this).attr('data-genre');
+                if (data_id.charAt(0) == 'm') {
+                    $.ajax({
+                        url: url + 'movie/' + data_id.slice(1) + '/credits',
+                        data: {
+                            api_key: key
+                        },
+                        success: function(database) {
+                            var s = '';
+                            for (var j = 0; j < database.cast.length && j < 5; j++) {
+                                if (j == database.cast.length - 1 || j == 4) {
+                                    s += database.cast[j].name;
+                                } else {
+                                    s += (database.cast[j].name + ', ');
+                                }
+                            }
+                            $('[data-id=' + data_id + ']').find('.cast').html('<p>Cast: ' + s + '</p>');
+                        },
+                        error: function() {
+                            alert('si è verificato un errore');
+                        }
+                    })
+                    $.ajax({
+                        url: url + 'genre/movie/list',
+                        data: {
+                            api_key: key
+                        },
+                        success: function(database) {
+                            var s = '';
+                            var j = 0;
+                            var k = 0;
+                            while (j < database.genres.length && k < 3) {
+                                if (data_genre.includes(database.genres[j].id)) {
+                                    s += (database.genres[j].name + ' - ');
+                                    k += 1;
+                                }
+                                j += 1;
+                            }
+                            s = s.slice(0, -3);
+                            $('[data-id=' + data_id + ']').find('.genres').html('<p>' + s + '</p>');
+                        },
+                        error: function() {
+                            alert('si è verificato un errore');
+                        }
+                    })
+                } else if (data_id.charAt(0) == 't') {
+                    $.ajax({
+                        url: url + 'tv/' + data_id.slice(1) + '/credits',
+                        data: {
+                            api_key: key
+                        },
+                        success: function(database) {
+                            var s = '';
+                            for (var j = 0; j < database.cast.length && j < 5; j++) {
+                                if (j == database.cast.length - 1 || j == 4) {
+                                    s += database.cast[j].name;
+                                } else {
+                                    s += (database.cast[j].name + ', ');
+                                }
+                            }
+                            $('[data-id=' + data_id + ']').find('.cast').html('<p>Cast: ' + s + '</p>');
+                        },
+                        error: function() {
+                            alert('si è verificato un errore');
+                        }
+                    })
+                    $.ajax({
+                        url: url + 'genre/tv/list',
+                        data: {
+                            api_key: key
+                        },
+                        success: function(database) {
+                            var s = '';
+                            var j = 0;
+                            var k = 0;
+                            while (j < database.genres.length && k < 3) {
+                                if (data_genre.includes(database.genres[j].id)) {
+                                    s += (database.genres[j].name + ' - ');
+                                    k += 1;
+                                }
+                                j += 1;
+                            }
+                            s = s.slice(0, -3);
+                            $('[data-id=' + data_id + ']').find('.genres').html('<p>' + s + '</p>');
+                        },
+                        error: function() {
+                            alert('si è verificato un errore');
+                        }
+                    })
+                }
+            });
         },
         error: function() {
             alert('si è verificato un errore');
@@ -147,7 +338,9 @@ function create_object_film(data) {
         original_title: data.original_title,
         language: create_flag(data.original_language),
         vote: create_star(round_number(data.vote_average / 2)),
-        overview: data.overview
+        overview: data.overview,
+        id: 'm' + data.id,
+        genre: data.genre_ids.join(' ')
     }
     return (box);
 }
@@ -159,13 +352,15 @@ function create_object_tvshow(data) {
         original_title: data.original_name,
         language: create_flag(data.original_language),
         vote: create_star(round_number(data.vote_average / 2)),
-        overview: data.overview
+        overview: data.overview,
+        id: 't' + data.id,
+        genre: data.genre_ids.join(' ')
     }
     return (box);
 }
 
 function create_flag(l) {
-    var ls = ['en', 'it'];
+    var ls = ['en', 'it', 'es', 'ja', 'fr'];
     if (ls.includes(l)) {
         return ('<img src="icons/' + l + '.png" alt="' + l + '">');
     } else {

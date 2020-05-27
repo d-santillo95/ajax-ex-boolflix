@@ -158,14 +158,18 @@
             </footer>
         </div>
         <script id="box-template" type="text/x-handlebars-template">
-            <div class="box-film">
+            <div class="box-film" data-id="{{ id }}" data-genre="{{ genre }}">
                 <img src="{{ img }}" alt="{{ title }}">
                 <div class="details-box">
                     <div class="title">
                         <h3>{{ title }}</h3>
                     </div>
                     <div class="original_title">
-                        <h3>{{ original_title }}</h3>
+                        <p>{{ original_title }}</p>
+                    </div>
+                    <div class="genres">
+                    </div>
+                    <div class="cast">
                     </div>
                     <div class="language">
                         {{{ language }}}
@@ -180,14 +184,18 @@
             </div>
         </script>
         <script id="principal-box-template" type="text/x-handlebars-template">
-            <div class="principal-box">
+            <div class="principal-box box-film" data-id="{{ id }}" data-genre="{{ genre }}">
                 <img src="{{ img }}" alt="{{ title }}">
                 <div class="details-box">
                     <div class="title">
                         <h3>{{ title }}</h3>
                     </div>
                     <div class="original_title">
-                        <h3>{{ original_title }}</h3>
+                        <p>{{ original_title }}</p>
+                    </div>
+                    <div class="genres">
+                    </div>
+                    <div class="cast">
                     </div>
                     <div class="language">
                         {{{ language }}}
