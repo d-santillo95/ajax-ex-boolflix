@@ -4,6 +4,63 @@ $(document).ready(function() {
     var url_tmdb = 'https://api.themoviedb.org/3/';
     var key_tmdb = 'ab01f80fcd1c767af6b3f7ec4f2fc2a0';
 
+    $.ajax({
+        url: url_tmdb + 'trending/tv/week',
+        data: {
+            api_key: key_tmdb,
+            language: 'it',
+        },
+        success: function(data) {
+            var n = Math.floor(Math.random() * 7);
+            for (var i = 0; i < data.results.length && i <= 6; i++) {
+                var box = create_object_tvshow(data.results[i]);
+                if (i == n) {
+                    if (!data.results[i].backdrop_path) {
+                        box.img = 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTU9fO4qpCMJjSKHoppgr2WecWZ9oO8NfTBr3VR1DtpYZFdbZa2&usqp=CAU'
+                    } else {
+                        box.img = 'https://image.tmdb.org/t/p/original/' + data.results[i].backdrop_path;
+                    }
+                    var html = template_principal_box(box);
+                    $('#home-page').prepend(html);
+                } else {
+                    if (!box.img) {
+                        box.img = 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTU9fO4qpCMJjSKHoppgr2WecWZ9oO8NfTBr3VR1DtpYZFdbZa2&usqp=CAU'
+                    } else {
+                        box.img = 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/' + box.img;
+                    }
+                    var html = template_box(box);
+                    $('#other-boxes .row:nth-child(2)').append(html);
+                }
+            }
+        },
+        error: function() {
+            alert('si è verificato un errore');
+        }
+    })
+
+    $.ajax({
+        url: url_tmdb + 'trending/movie/week',
+        data: {
+            api_key: key_tmdb,
+            language: 'it',
+        },
+        success: function(data) {
+            for (var i = 0; i < data.results.length && i < 6; i++) {
+                var box = create_object_film(data.results[i]);
+                if (!box.img) {
+                    box.img = 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTU9fO4qpCMJjSKHoppgr2WecWZ9oO8NfTBr3VR1DtpYZFdbZa2&usqp=CAU'
+                } else {
+                    box.img = 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/' + box.img;
+                }
+                var html = template_box(box);
+                $('#other-boxes .row:last-of-type').append(html);
+            }
+        },
+        error: function() {
+            alert('si è verificato un errore');
+        }
+    })
+
     $('.btn-home').click(function() {
         $('#search-page').html('');
         $('#wrap-search-page').removeClass('active');
