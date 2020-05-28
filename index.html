@@ -23,10 +23,10 @@
                                 <a class="btn-home active" href="#">Home</a>
                             </li>
                             <li>
-                                <a href="#">Serie TV</a>
+                                <a href="#" class="btn-tv">Serie TV</a>
                             </li>
                             <li>
-                                <a href="#">Film</a>
+                                <a href="#" class="btn-movie">Film</a>
                             </li>
                             <li>
                                 <a href="#">Nuovi arrivi</a>
@@ -38,9 +38,9 @@
                     </div>
                 </div>
                 <div id="header-right">
-                    <div class="search-section nav-div">
-                        <span id="icon-search" class="active"><i class="fas fa-search"></i></span>
-                        <input type="search" id="search-input" placeholder="Titoli, persone, generi" class="active">
+                    <div class="search-section nav-div srch">
+                        <span id="icon-search" class="srch"><i class="fas fa-search srch"></i></span>
+                        <input type="search" id="search-input" placeholder="Titoli, persone, generi" class="srch">
                     </div>
                     <div class="nav-div">
                         <a href="#">BAMBINI</a>
@@ -63,7 +63,7 @@
                 <div class="search">
                     <p>Risultati per la ricerca: <span id="search-paramater"></span></p>
                     <select id="search-genres">
-                        <option value="-1">Seleziona un genere</option>
+                        <option value="">Seleziona un genere</option>
                     </select>
                 </div>
                 <div id="search-page" class="clearfix"></div>
@@ -82,6 +82,8 @@
                     </div>
                 </div>
             </div>
+            <div id="tv-page"></div>
+            <div id="movie-page"></div>
             <footer>
                 <div id="footer-top">
                     <a href="#">

@@ -106,6 +106,7 @@ header.scrolled {
 #icon-search i {
     font-size: 18px;
     color: white;
+    cursor: pointer;
 }
 
 #icon-search.active {
@@ -151,8 +152,22 @@ header.scrolled {
     margin-bottom: 40px;
 }
 
+#search-genres{
+    padding: 5px 7px;
+    border: 1px solid white;
+    margin-top: 20px;
+    font-size: 20px;
+    background-color: black;
+    color: white;
+}
+
+#search-page{
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .box-film:not(.principal-box) {
-    float: left;
+    flex-shrink: 0;
     width: calc(100% / 6);
     padding: 0 1px;
     color: white;
@@ -313,7 +328,30 @@ header.scrolled {
 }
 
 #other-boxes .row {
+    display: flex;
     margin-bottom: 0;
+}
+
+#tv-page {
+    display: none;
+    padding: 150px 60px 130px;
+    min-height: 100vh;
+}
+
+#tv-page.active{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#movie-page {
+    display: none;
+    padding: 150px 60px 130px;
+    min-height: 100vh;
+}
+
+#movie-page.active{
+    display: flex;
+    flex-wrap: wrap;
 }
 
 footer {

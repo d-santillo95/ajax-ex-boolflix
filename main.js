@@ -10,9 +10,7 @@ $(document).ready(function() {
             api_key: key_tmdb
         },
         success: function(database) {
-            var s = '';
             var j = 0;
-            var k = 0;
             while (j < database.genres.length) {
                 if (!genres_tmdb.includes(database.genres[j].id)) {
                     genres_tmdb.push(database.genres[j].id);
@@ -201,32 +199,97 @@ $(document).ready(function() {
         }
     })
 
+    $(document).on('click', function(e) {
+        if (!$(e.target).hasClass('srch')) {
+            $('#search-input').removeClass('active');
+            $('#icon-search').removeClass('active');
+        }
+    })
+
     $('.btn-home').click(function() {
         $('#search-page').html('');
         $('#wrap-search-page').removeClass('active');
+        $('#tv-page').removeClass('active');
+        $('.btn-tv').removeClass('active');
+        $('.btn-home').removeClass('active');
+        $('#movie-page').removeClass('active');
         $('#home-page').addClass('active');
         $('.btn-home').addClass('active');
+    })
+
+    $('.btn-tv').click(function() {
+        if(!$(this).hasClass('active')){
+            $('#search-page').html('');
+            $('#tv-page').html('');
+            $('#wrap-search-page').removeClass('active');
+            $('#home-page').removeClass('active');
+            $('.btn-home').removeClass('active');
+            $('#movie-page').removeClass('active');
+            $('.btn-movie').removeClass('active');
+            $('#tv-page').addClass('active');
+            $('.btn-tv').addClass('active');
+            call_ajax('tv', url_tmdb, key_tmdb, template_box, '', 'trending/tv/day', 1);
+        }
+    })
+
+    $('.btn-movie').click(function() {
+        if(!$(this).hasClass('active')){
+            $('#search-page').html('');
+            $('#tv-page').html('');
+            $('#movie-page').html('');
+            $('#wrap-search-page').removeClass('active');
+            $('#home-page').removeClass('active');
+            $('.btn-home').removeClass('active');
+            $('#tv-page').removeClass('active');
+            $('.btn-tv').removeClass('active');
+            $('#movie-page').addClass('active');
+            $('.btn-movie').addClass('active');
+            call_ajax('movie', url_tmdb, key_tmdb, template_box, '', 'trending/movie/day', 0);
+        }
+    })
+
+    $('#icon-search').click(function() {
+        if ($('#icon-search').hasClass('active')) {
+            var r = $('#search-input').val().trim();
+            if (!r == '') {
+                $('#search-page').html('');
+                $('#search-paramater').text(r);
+                call_ajax('search', url_tmdb, key_tmdb, template_box, r, 'search/movie', 0);
+                call_ajax('search', url_tmdb, key_tmdb, template_box, r, 'search/tv', 1);
+                $('#wrap-search-page').addClass('active');
+                $('#home-page').removeClass('active');
+                $('.btn-home').removeClass('active');
+                $('#tv-page').removeClass('active');
+                $('.btn-tv').removeClass('active');
+                $('.btn-movie').removeClass('active');
+                $('#movie-page').removeClass('active')
+                $(this).val('');
+                $('#search-genres').val('');
+            }
+        } else {
+            $('#search-input').addClass('active');
+            $('#search-input').focus();
+            $('#icon-search').addClass('active');
+        }
     })
 
     $('#search-input').keyup(function(e) {
         if (e.which == 13) {
             var r = $(this).val().trim();
-            if (r == '') {
-                $('#search-genres').val(-1);
-                $('#search-page').html('');
-                $('#wrap-search-page').removeClass('active');
-                $('#home-page').addClass('active');
-                $('.btn-home').addClass('active');
-            } else {
+            if (!r == '') {
                 $('#search-page').html('');
                 $('#search-paramater').text(r);
-                call_ajax(url_tmdb, key_tmdb, template_box, r, 'search/movie', 0);
-                call_ajax(url_tmdb, key_tmdb, template_box, r, 'search/tv', 1);
+                call_ajax('search', url_tmdb, key_tmdb, template_box, r, 'search/movie', 0);
+                call_ajax('search', url_tmdb, key_tmdb, template_box, r, 'search/tv', 1);
                 $('#wrap-search-page').addClass('active');
                 $('#home-page').removeClass('active');
                 $('.btn-home').removeClass('active');
+                $('#tv-page').removeClass('active');
+                $('.btn-tv').removeClass('active');
+                $('.btn-movie').removeClass('active');
+                $('#movie-page').removeClass('active')
                 $(this).val('');
-                $('#search-genres').val(-1);
+                $('#search-genres').val('');
             }
         }
     })
@@ -251,7 +314,7 @@ $(document).ready(function() {
     });
 })
 
-function call_ajax(url, key, template, r, search, type, page = 1) {
+function call_ajax(cont, url, key, template, r, search, type, page = 1) {
     $.ajax({
         url: url + search,
         data: {
@@ -261,10 +324,10 @@ function call_ajax(url, key, template, r, search, type, page = 1) {
             page: page
         },
         success: function(data) {
-            create_box(data.results, template, type);
+            create_box(cont, data.results, template, type);
             if (data.total_pages > page && page < 6) {
                 page += 1;
-                call_ajax(url, key, template, r, search, type, page);
+                call_ajax(cont, url, key, template, r, search, type, page);
             } else {
                 $('.box-film').each(function() {
                     var data_id = $(this).attr('data-id');
@@ -367,7 +430,7 @@ function call_ajax(url, key, template, r, search, type, page = 1) {
     })
 }
 
-function create_box(data, template, type) {
+function create_box(cont, data, template, type) {
     for (var i = 0; i < data.length; i++) {
         // if ($('#search-page .row:last-of-type .box-film').length % 6 == 0) {
         //     $('#search-page').append('<div class="row clearfix"></div>');
@@ -383,7 +446,7 @@ function create_box(data, template, type) {
             box.img = 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/' + box.img;
         }
         var html = template(box);
-        $('#search-page').append(html);
+        $('#' + cont + '-page').append(html);
     }
 }
 
