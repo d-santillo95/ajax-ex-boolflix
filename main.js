@@ -3,6 +3,48 @@ $(document).ready(function() {
     var template_principal_box = Handlebars.compile($('#principal-box-template').html());
     var url_tmdb = 'https://api.themoviedb.org/3/';
     var key_tmdb = 'ab01f80fcd1c767af6b3f7ec4f2fc2a0';
+    var genres_tmdb = [];
+    $.ajax({
+        url: url_tmdb + 'genre/movie/list',
+        data: {
+            api_key: key_tmdb
+        },
+        success: function(database) {
+            var s = '';
+            var j = 0;
+            var k = 0;
+            while (j < database.genres.length) {
+                if (!genres_tmdb.includes(database.genres[j].id)) {
+                    genres_tmdb.push(database.genres[j].id);
+                    $('#search-genres').append('<option value="' + database.genres[j].id + '">' + database.genres[j].name + '</option>');
+                }
+                j += 1;
+            }
+        },
+        error: function() {
+            alert('si è verificato un errore');
+        }
+    })
+
+    $.ajax({
+        url: url_tmdb + 'genre/tv/list',
+        data: {
+            api_key: key_tmdb
+        },
+        success: function(database) {
+            var j = 0;
+            while (j < database.genres.length) {
+                if (!genres_tmdb.includes(database.genres[j].id)) {
+                    genres_tmdb.push(database.genres[j].id);
+                    $('#search-genres').append('<option value="' + database.genres[j].id + '">' + database.genres[j].name + '</option>');
+                }
+                j += 1;
+            }
+        },
+        error: function() {
+            alert('si è verificato un errore');
+        }
+    })
 
     $.ajax({
         url: url_tmdb + 'trending/tv/week',
@@ -170,6 +212,7 @@ $(document).ready(function() {
         if (e.which == 13) {
             var r = $(this).val().trim();
             if (r == '') {
+                $('#search-genres').val(-1);
                 $('#search-page').html('');
                 $('#wrap-search-page').removeClass('active');
                 $('#home-page').addClass('active');
@@ -183,8 +226,20 @@ $(document).ready(function() {
                 $('#home-page').removeClass('active');
                 $('.btn-home').removeClass('active');
                 $(this).val('');
+                $('#search-genres').val(-1);
             }
         }
+    })
+
+    $('#search-genres').change(function() {
+        var genre = $('#search-genres').val();
+        $('#search-page .box-film').removeClass('unselected');
+        $('#search-page .box-film').each(function() {
+            var data_genre = $(this).attr('data-genre');
+            if (!data_genre.includes(genre)) {
+                $(this).addClass('unselected');
+            }
+        })
     })
 
     $(window).on("scroll", function() {
@@ -210,100 +265,101 @@ function call_ajax(url, key, template, r, search, type, page = 1) {
             if (data.total_pages > page && page < 6) {
                 page += 1;
                 call_ajax(url, key, template, r, search, type, page);
+            } else {
+                $('.box-film').each(function() {
+                    var data_id = $(this).attr('data-id');
+                    var data_genre = $(this).attr('data-genre');
+                    if (data_id.charAt(0) == 'm') {
+                        $.ajax({
+                            url: url + 'movie/' + data_id.slice(1) + '/credits',
+                            data: {
+                                api_key: key
+                            },
+                            success: function(database) {
+                                var s = '';
+                                for (var j = 0; j < database.cast.length && j < 5; j++) {
+                                    if (j == database.cast.length - 1 || j == 4) {
+                                        s += database.cast[j].name;
+                                    } else {
+                                        s += (database.cast[j].name + ', ');
+                                    }
+                                }
+                                $('[data-id=' + data_id + ']').find('.cast').html('<p>Cast: ' + s + '</p>');
+                            },
+                            error: function() {
+                                alert('si è verificato un errore');
+                            }
+                        })
+                        $.ajax({
+                            url: url + 'genre/movie/list',
+                            data: {
+                                api_key: key
+                            },
+                            success: function(database) {
+                                var s = '';
+                                var j = 0;
+                                var k = 0;
+                                while (j < database.genres.length && k < 3) {
+                                    if (data_genre.includes(database.genres[j].id)) {
+                                        s += (database.genres[j].name + ' - ');
+                                        k += 1;
+                                    }
+                                    j += 1;
+                                }
+                                s = s.slice(0, -3);
+                                $('[data-id=' + data_id + ']').find('.genres').html('<p>' + s + '</p>');
+                            },
+                            error: function() {
+                                alert('si è verificato un errore');
+                            }
+                        })
+                    } else if (data_id.charAt(0) == 't') {
+                        $.ajax({
+                            url: url + 'tv/' + data_id.slice(1) + '/credits',
+                            data: {
+                                api_key: key
+                            },
+                            success: function(database) {
+                                var s = '';
+                                for (var j = 0; j < database.cast.length && j < 5; j++) {
+                                    if (j == database.cast.length - 1 || j == 4) {
+                                        s += database.cast[j].name;
+                                    } else {
+                                        s += (database.cast[j].name + ', ');
+                                    }
+                                }
+                                $('[data-id=' + data_id + ']').find('.cast').html('<p>Cast: ' + s + '</p>');
+                            },
+                            error: function() {
+                                alert('si è verificato un errore');
+                            }
+                        })
+                        $.ajax({
+                            url: url + 'genre/tv/list',
+                            data: {
+                                api_key: key
+                            },
+                            success: function(database) {
+                                var s = '';
+                                var j = 0;
+                                var k = 0;
+                                while (j < database.genres.length && k < 3) {
+                                    if (data_genre.includes(database.genres[j].id)) {
+                                        s += (database.genres[j].name + ' - ');
+                                        k += 1;
+                                    }
+                                    j += 1;
+                                }
+                                s = s.slice(0, -3);
+                                $('[data-id=' + data_id + ']').find('.genres').html('<p>' + s + '</p>');
+                            },
+                            error: function() {
+                                alert('si è verificato un errore');
+                            }
+                        })
+                    }
+                });
             }
-            $('.box-film').each(function() {
-                var data_id = $(this).attr('data-id');
-                var data_genre = $(this).attr('data-genre');
-                if (data_id.charAt(0) == 'm') {
-                    $.ajax({
-                        url: url + 'movie/' + data_id.slice(1) + '/credits',
-                        data: {
-                            api_key: key
-                        },
-                        success: function(database) {
-                            var s = '';
-                            for (var j = 0; j < database.cast.length && j < 5; j++) {
-                                if (j == database.cast.length - 1 || j == 4) {
-                                    s += database.cast[j].name;
-                                } else {
-                                    s += (database.cast[j].name + ', ');
-                                }
-                            }
-                            $('[data-id=' + data_id + ']').find('.cast').html('<p>Cast: ' + s + '</p>');
-                        },
-                        error: function() {
-                            alert('si è verificato un errore');
-                        }
-                    })
-                    $.ajax({
-                        url: url + 'genre/movie/list',
-                        data: {
-                            api_key: key
-                        },
-                        success: function(database) {
-                            var s = '';
-                            var j = 0;
-                            var k = 0;
-                            while (j < database.genres.length && k < 3) {
-                                if (data_genre.includes(database.genres[j].id)) {
-                                    s += (database.genres[j].name + ' - ');
-                                    k += 1;
-                                }
-                                j += 1;
-                            }
-                            s = s.slice(0, -3);
-                            $('[data-id=' + data_id + ']').find('.genres').html('<p>' + s + '</p>');
-                        },
-                        error: function() {
-                            alert('si è verificato un errore');
-                        }
-                    })
-                } else if (data_id.charAt(0) == 't') {
-                    $.ajax({
-                        url: url + 'tv/' + data_id.slice(1) + '/credits',
-                        data: {
-                            api_key: key
-                        },
-                        success: function(database) {
-                            var s = '';
-                            for (var j = 0; j < database.cast.length && j < 5; j++) {
-                                if (j == database.cast.length - 1 || j == 4) {
-                                    s += database.cast[j].name;
-                                } else {
-                                    s += (database.cast[j].name + ', ');
-                                }
-                            }
-                            $('[data-id=' + data_id + ']').find('.cast').html('<p>Cast: ' + s + '</p>');
-                        },
-                        error: function() {
-                            alert('si è verificato un errore');
-                        }
-                    })
-                    $.ajax({
-                        url: url + 'genre/tv/list',
-                        data: {
-                            api_key: key
-                        },
-                        success: function(database) {
-                            var s = '';
-                            var j = 0;
-                            var k = 0;
-                            while (j < database.genres.length && k < 3) {
-                                if (data_genre.includes(database.genres[j].id)) {
-                                    s += (database.genres[j].name + ' - ');
-                                    k += 1;
-                                }
-                                j += 1;
-                            }
-                            s = s.slice(0, -3);
-                            $('[data-id=' + data_id + ']').find('.genres').html('<p>' + s + '</p>');
-                        },
-                        error: function() {
-                            alert('si è verificato un errore');
-                        }
-                    })
-                }
-            });
         },
         error: function() {
             alert('si è verificato un errore');
@@ -313,9 +369,9 @@ function call_ajax(url, key, template, r, search, type, page = 1) {
 
 function create_box(data, template, type) {
     for (var i = 0; i < data.length; i++) {
-        if ($('#search-page .row:last-of-type .box-film').length % 6 == 0) {
-            $('#search-page').append('<div class="row clearfix"></div>');
-        }
+        // if ($('#search-page .row:last-of-type .box-film').length % 6 == 0) {
+        //     $('#search-page').append('<div class="row clearfix"></div>');
+        // }
         if (type == 0) {
             var box = create_object_film(data[i]);
         } else if (type == 1) {
@@ -327,7 +383,7 @@ function create_box(data, template, type) {
             box.img = 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/' + box.img;
         }
         var html = template(box);
-        $('#search-page .row:last-of-type').append(html);
+        $('#search-page').append(html);
     }
 }
 

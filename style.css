@@ -151,11 +151,6 @@ header.scrolled {
     margin-bottom: 40px;
 }
 
-.row {
-    width: 100%;
-    margin-bottom: 60px;
-}
-
 .box-film:not(.principal-box) {
     float: left;
     width: calc(100% / 6);
@@ -164,9 +159,14 @@ header.scrolled {
     cursor: pointer;
     position: relative;
     transition: transform 0.6s;
+    margin-bottom: 60px;
 }
 
-.box-film:not(.principal-box) > img {
+#search-page .box-film.unselected {
+    display: none;
+}
+
+.box-film:not(.principal-box)>img {
     width: 100%;
 }
 
@@ -300,7 +300,6 @@ header.scrolled {
     margin: 7px 0;
 }
 
-
 #other-boxes {
     padding: 0 60px;
     transform: translateY(-120px);
@@ -313,7 +312,7 @@ header.scrolled {
     color: white;
 }
 
-#other-boxes .row:last-of-type {
+#other-boxes .row {
     margin-bottom: 0;
 }
 
