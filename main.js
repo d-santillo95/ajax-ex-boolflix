@@ -213,6 +213,10 @@ $(document).ready(function() {
         $('.btn-tv').removeClass('active');
         $('.btn-movie').removeClass('active');
         $('#movie-page').removeClass('active');
+        $('#new-page').removeClass('active');
+        $('.btn-new').removeClass('active');
+        $('#my-page').removeClass('active');
+        $('.btn-my').removeClass('active');
         $('#home-page').addClass('active');
         $('.btn-home').addClass('active');
     })
@@ -226,6 +230,10 @@ $(document).ready(function() {
             $('.btn-home').removeClass('active');
             $('#movie-page').removeClass('active');
             $('.btn-movie').removeClass('active');
+            $('#new-page').removeClass('active');
+            $('.btn-new').removeClass('active');
+            $('#my-page').removeClass('active');
+            $('.btn-my').removeClass('active');
             $('#tv-page').addClass('active');
             $('.btn-tv').addClass('active');
             call_ajax('tv', url_tmdb, key_tmdb, template_box, '', 'trending/tv/day', 1);
@@ -235,16 +243,59 @@ $(document).ready(function() {
     $('.btn-movie').click(function() {
         if(!$(this).hasClass('active')){
             $('#search-page').html('');
-            $('#tv-page').html('');
             $('#movie-page').html('');
             $('#wrap-search-page').removeClass('active');
             $('#home-page').removeClass('active');
             $('.btn-home').removeClass('active');
             $('#tv-page').removeClass('active');
             $('.btn-tv').removeClass('active');
+            $('#new-page').removeClass('active');
+            $('.btn-new').removeClass('active');
+            $('#my-page').removeClass('active');
+            $('.btn-my').removeClass('active');
             $('#movie-page').addClass('active');
             $('.btn-movie').addClass('active');
             call_ajax('movie', url_tmdb, key_tmdb, template_box, '', 'trending/movie/day', 0);
+        }
+    })
+
+    $('.btn-new').click(function() {
+        if(!$(this).hasClass('active')){
+            $('#search-page').html('');
+            $('#new-page').html('');
+            $('#wrap-search-page').removeClass('active');
+            $('#home-page').removeClass('active');
+            $('.btn-home').removeClass('active');
+            $('#tv-page').removeClass('active');
+            $('.btn-tv').removeClass('active');
+            $('#movie-page').removeClass('active');
+            $('.btn-movie').removeClass('active');
+            $('#my-page').removeClass('active');
+            $('.btn-my').removeClass('active');
+            $('#new-page').addClass('active');
+            $('.btn-new').addClass('active');
+            call_ajax('new', url_tmdb, key_tmdb, template_box, '', 'movie/now_playing', 0, 1, 2);
+            call_ajax('new', url_tmdb, key_tmdb, template_box, '', 'tv/on_the_air', 1, 1, 2);
+        }
+    })
+
+    $('.btn-my').click(function() {
+        if(!$(this).hasClass('active')){
+            $('#search-page').html('');
+            $('#my-page').html('');
+            $('#wrap-search-page').removeClass('active');
+            $('#home-page').removeClass('active');
+            $('.btn-home').removeClass('active');
+            $('#tv-page').removeClass('active');
+            $('.btn-tv').removeClass('active');
+            $('#movie-page').removeClass('active');
+            $('.btn-movie').removeClass('active');
+            $('#new-page').removeClass('active');
+            $('.btn-new').removeClass('active');
+            $('#my-page').addClass('active');
+            $('.btn-my').addClass('active');
+            call_ajax('my', url_tmdb, key_tmdb, template_box, '', 'movie/top_rated', 0, 1, 2);
+            call_ajax('my', url_tmdb, key_tmdb, template_box, '', 'tv/top_rated', 1, 1, 2);
         }
     })
 
@@ -262,7 +313,11 @@ $(document).ready(function() {
                 $('#tv-page').removeClass('active');
                 $('.btn-tv').removeClass('active');
                 $('.btn-movie').removeClass('active');
-                $('#movie-page').removeClass('active')
+                $('#movie-page').removeClass('active');
+                $('#new-page').removeClass('active');
+                $('.btn-new').removeClass('active');
+                $('#my-page').removeClass('active');
+                $('.btn-my').removeClass('active');
                 $(this).val('');
                 $('#search-genres').val('');
             }
@@ -287,7 +342,11 @@ $(document).ready(function() {
                 $('#tv-page').removeClass('active');
                 $('.btn-tv').removeClass('active');
                 $('.btn-movie').removeClass('active');
-                $('#movie-page').removeClass('active')
+                $('#movie-page').removeClass('active');
+                $('#new-page').removeClass('active');
+                $('.btn-new').removeClass('active');
+                $('#my-page').removeClass('active');
+                $('.btn-my').removeClass('active');
                 $(this).val('');
                 $('#search-genres').val('');
             }
@@ -314,7 +373,8 @@ $(document).ready(function() {
     });
 })
 
-function call_ajax(cont, url, key, template, r, search, type, page = 1) {
+function call_ajax(cont, url, key, template, r, search, type, page = 1, tot_pages
+= 6) {
     $.ajax({
         url: url + search,
         data: {
@@ -325,9 +385,9 @@ function call_ajax(cont, url, key, template, r, search, type, page = 1) {
         },
         success: function(data) {
             create_box(cont, data.results, template, type);
-            if (data.total_pages > page && page < 6) {
+            if (data.total_pages > page && page < tot_pages) {
                 page += 1;
-                call_ajax(cont, url, key, template, r, search, type, page);
+                call_ajax(cont, url, key, template, r, search, type, page, tot_pages);
             } else {
                 $('.box-film').each(function() {
                     var data_id = $(this).attr('data-id');

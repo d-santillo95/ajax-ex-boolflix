@@ -354,6 +354,28 @@ header.scrolled {
     flex-wrap: wrap;
 }
 
+#new-page {
+    display: none;
+    padding: 150px 60px 130px;
+    min-height: 100vh;
+}
+
+#new-page.active{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#my-page {
+    display: none;
+    padding: 150px 60px 130px;
+    min-height: 100vh;
+}
+
+#my-page.active{
+    display: flex;
+    flex-wrap: wrap;
+}
+
 footer {
     width: 50%;
     margin: auto;
