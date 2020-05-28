@@ -211,7 +211,7 @@ $(document).ready(function() {
         $('#wrap-search-page').removeClass('active');
         $('#tv-page').removeClass('active');
         $('.btn-tv').removeClass('active');
-        $('.btn-home').removeClass('active');
+        $('.btn-movie').removeClass('active');
         $('#movie-page').removeClass('active');
         $('#home-page').addClass('active');
         $('.btn-home').addClass('active');
