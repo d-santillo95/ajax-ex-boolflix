@@ -389,7 +389,8 @@ function call_ajax(cont, url, key, template, r, search, type, page = 1, tot_page
                 page += 1;
                 call_ajax(cont, url, key, template, r, search, type, page, tot_pages);
             } else {
-                $('.box-film').each(function() {
+                $('option:not(:first-child)').removeClass('active')
+                $('#' + cont + '-page ' + '.box-film').each(function() {
                     var data_id = $(this).attr('data-id');
                     var data_genre = $(this).attr('data-genre');
                     if (data_id.charAt(0) == 'm') {
@@ -480,6 +481,13 @@ function call_ajax(cont, url, key, template, r, search, type, page = 1, tot_page
                                 alert('si è verificato un errore');
                             }
                         })
+                    }
+                    if (cont == 'search') {
+                        $('option:not(:first-child)').each(function() {
+                            if (data_genre.includes($(this).val())) {
+                                $(this).addClass('active');
+                            }
+                        });
                     }
                 });
             }

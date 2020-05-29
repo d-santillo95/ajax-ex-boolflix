@@ -161,6 +161,14 @@ header.scrolled {
     color: white;
 }
 
+#search-genres option{
+    display: none;
+}
+
+#search-genres option.active{
+    display: block;
+}
+
 #search-page{
     display: flex;
     flex-wrap: wrap;
@@ -343,7 +351,7 @@ header.scrolled {
     flex-wrap: wrap;
 }
 
-#movie-page {
+#movie-page:n {
     display: none;
     padding: 150px 60px 130px;
     min-height: 100vh;
